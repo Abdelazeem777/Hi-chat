@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/preference-v7-28.0.0.aar/e71cf2aecb78a5fa8457e7df5ece2d5b/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,127",
+                        "endColumns": "71,64",
+                        "endOffsets": "122,187"
+                    }
+                },
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/welcome-1.4.1.aar/73aef0d46b259fb0fa89f77739a708ec/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,110",
+                        "endColumns": "54,51",
+                        "endOffsets": "105,157"
+                    },
+                    "to": {
+                        "startLines": "4,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "192,247",
+                        "endColumns": "54,51",
+                        "endOffsets": "242,294"
+                    }
+                }
+            ]
+        }
+    ]
+}

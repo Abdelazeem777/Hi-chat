@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginBottom="3dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/singleUserImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/default_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintStart_toEndOf="@+id/singleUserImage"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="8dp"
+
+        android:background="@drawable/style_for_chat_fragment">
+
+        <TextView
+            android:id="@+id/singleUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:text="Display Name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="42dp"
+
+
+            >
+
+            <Button
+                android:id="@+id/buAcceptRequestFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/accept_button"
+                android:layout_marginBottom="2dp"
+                android:text="Accept"
+                android:textSize="15dp"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/buDeclineRequestFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/decline_button"
+                android:text="Decline"
+                android:textColor="@android:color/holo_red_light" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

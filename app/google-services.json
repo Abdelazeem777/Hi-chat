@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "901007932108",
+    "firebase_url": "https://say-hi-123.firebaseio.com",
+    "project_id": "say-hi-123",
+    "storage_bucket": "say-hi-123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901007932108:android:0f77fe5a0c6aeef3",
+        "android_client_info": {
+          "package_name": "com.ahk.sayhi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901007932108-7iqj2lf3rhi9jlihb473iaeq9f9urcau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahk.sayhi",
+            "certificate_hash": "9fc74ff005e7f0878759b42b08d70d10ff1b3639"
+          }
+        },
+        {
+          "client_id": "901007932108-fdv9sujv1n96l0fke8rmveov9mf0ohf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUK3d2KNeNjuKDNRpDfR_64OMgxop-PQg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901007932108-fdv9sujv1n96l0fke8rmveov9mf0ohf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
