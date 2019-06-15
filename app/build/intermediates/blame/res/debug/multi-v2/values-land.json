@@ -4,7 +4,7 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/9d588876197efad65e9daaef839ffef5/res/values-land/values-land.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/58705310c90c5c125ba9963aaf834c35/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,17 @@
                     }
                 },
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/welcome-1.4.1.aar/73aef0d46b259fb0fa89f77739a708ec/res/values-land/values-land.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/872686f5c61f3b02a57bbabb37005782/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,125,196",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,191,259"
+                    }
+                },
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/6f6bb9ec6204d9aba93aa03058186e3c/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -37,16 +47,6 @@
                         "startOffsets": "264,318",
                         "endColumns": "53,50",
                         "endOffsets": "313,364"
-                    }
-                },
-                {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/2799208b82aedfb1c94cd4beda47d16c/res/values-land/values-land.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,125,196",
-                        "endColumns": "69,70,67",
-                        "endOffsets": "120,191,259"
                     }
                 }
             ]

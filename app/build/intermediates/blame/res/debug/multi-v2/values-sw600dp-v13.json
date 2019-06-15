@@ -4,7 +4,17 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/welcome-1.4.1.aar/73aef0d46b259fb0fa89f77739a708ec/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/872686f5c61f3b02a57bbabb37005782/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,124,193,263,337,413,472,543",
+                        "endColumns": "68,68,69,73,75,58,70,67",
+                        "endOffsets": "119,188,258,332,408,467,538,606"
+                    }
+                },
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/6f6bb9ec6204d9aba93aa03058186e3c/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -21,17 +31,7 @@
                     }
                 },
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/2799208b82aedfb1c94cd4beda47d16c/res/values-sw600dp-v13/values-sw600dp-v13.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,124,193,263,337,413,472,543",
-                        "endColumns": "68,68,69,73,75,58,70,67",
-                        "endOffsets": "119,188,258,332,408,467,538,606"
-                    }
-                },
-                {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/9d588876197efad65e9daaef839ffef5/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/58705310c90c5c125ba9963aaf834c35/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,10,11,12",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

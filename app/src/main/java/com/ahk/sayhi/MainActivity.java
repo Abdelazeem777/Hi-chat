@@ -1,10 +1,13 @@
 package com.ahk.sayhi;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +35,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.stephentuso.welcome.WelcomeHelper;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import es.dmoral.toasty.Toasty;
 
@@ -56,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         mToolBar = (Toolbar) findViewById(R.id.mainPageToolBar);
         setSupportActionBar(mToolBar);
-        getSupportActionBar().setTitle("Hi");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         mQuery=FirebaseDatabase.getInstance().getReference().child("Users").limitToLast(50);
 
         mViewPager = (ViewPager) findViewById(R.id.mainTabPager);
@@ -65,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.mainTabs);
         mTabLayout.setupWithViewPager(mViewPager);
+        startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+
     }
 
     @Override
@@ -206,6 +217,42 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+            }
+        }.run();
 
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
 
+                startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+
+            }
+        }, 5000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+            }
+        }, 6000);
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(getApplicationContext(), firebaseMessagingService.class);
+                PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0, intent, 0);
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000), pi);
+            }
+        }.run();
+    }
 }

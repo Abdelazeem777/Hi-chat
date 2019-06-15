@@ -4,7 +4,7 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ldrtl-v17/values-ldrtl-v17.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/welcome-1.4.1.aar/73aef0d46b259fb0fa89f77739a708ec/res/values-ldrtl-v17/values-ldrtl-v17.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/6f6bb9ec6204d9aba93aa03058186e3c/res/values-ldrtl-v17/values-ldrtl-v17.xml",
                     "from": {
                         "startLines": "2,3,7",
                         "startColumns": "4,4,4",

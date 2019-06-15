@@ -79,6 +79,7 @@ public class chatActivity extends AppCompatActivity {
     private DatabaseReference mChatDatabase;
     private DatabaseReference mRootRef;
     private DatabaseReference mMessagesDatabase;
+    private DatabaseReference mMessageNotification;
     private FirebaseAuth mAuth;
 
     @Override
@@ -115,6 +116,7 @@ public class chatActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View actionBarView = inflater.inflate(R.layout.custom_chat_bar, null);
         actionBar.setCustomView(actionBarView);
+        mMessageNotification=FirebaseDatabase.getInstance().getReference().child("messageNotification");
         mChatDatabase = FirebaseDatabase.getInstance().getReference();
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -184,35 +186,6 @@ public class chatActivity extends AppCompatActivity {
         });
         mAdapter.setImageUrl(thumbImageUrl);
 
-        mChatDatabase.child("chat").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild(mChatUserId)) {
-                    Map chatAddMap = new HashMap();
-                    chatAddMap.put("seen", false);
-                    chatAddMap.put("timeStamp", ServerValue.TIMESTAMP);
-
-                    Map chatUserMap = new HashMap();
-                    chatUserMap.put("chat/" + mCurrentUserId + "/" + mChatUserId, chatAddMap);
-                    chatUserMap.put("chat/" + mChatUserId + "/" + mCurrentUserId, chatAddMap);
-
-                    mChatDatabase.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-                                Log.i("chatError", databaseError.getMessage());
-                            }
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                sendMessage();
-            }
-        });
 
 
         buSend.setOnClickListener(new View.OnClickListener() {
@@ -402,7 +375,20 @@ public class chatActivity extends AppCompatActivity {
                 mLinearLayout.scrollToPosition(messagesList.size() - 1);
 
                 mRefreshLayout.setRefreshing(false);
+                mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            ds.child("seen").getRef().setValue(true);
 
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
 
@@ -426,19 +412,7 @@ public class chatActivity extends AppCompatActivity {
 
             }
         });
-        mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ds.child("seen").getRef().setValue(true);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void sendMessage() {
@@ -472,11 +446,35 @@ public class chatActivity extends AppCompatActivity {
 
                 }
             });
+
             mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.child("seen").getRef().setValue(true);
+                    if (!dataSnapshot.hasChild(mChatUserId)) {
+                        Map chatAddMap = new HashMap();
+                        chatAddMap.put("seen", false);
+                        chatAddMap.put("timeStamp", ServerValue.TIMESTAMP);
+
+                        Map chatUserMap = new HashMap();
+                        chatUserMap.put("chat/" + mCurrentUserId + "/" + mChatUserId, chatAddMap);
+                        chatUserMap.put("chat/" +  mChatUserId+ "/" +mCurrentUserId , chatAddMap);
+                        chatAddMap.clear();
+                        chatAddMap.put("seen", true);
+                        chatAddMap.put("timeStamp", ServerValue.TIMESTAMP);
+
+
+                        chatUserMap.put("chat/" + mChatUserId + "/" + mCurrentUserId, chatAddMap);
+
+
+                        mChatDatabase.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                if (databaseError != null) {
+                                    Log.i("chatError", databaseError.getMessage());
+                                }
+                            }
+                        });
+
                     }
                 }
 
@@ -485,6 +483,30 @@ public class chatActivity extends AppCompatActivity {
 
                 }
             });
+            HashMap<String,String> notificationMap=new HashMap<>();
+            notificationMap.put("message",message);
+
+
+            mMessageNotification.child(mChatUserId).child(mCurrentUserId).push().setValue(notificationMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.i("notify","notification sent successfully");
+                }
+            });
+
+
+            mChatDatabase.child("chat").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    sendMessage();
+                }
+            });
+
         }
     }
 

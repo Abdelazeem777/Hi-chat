@@ -4,7 +4,18 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v17/values-v17.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/2799208b82aedfb1c94cd4beda47d16c/res/values-v17/values-v17.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/5f9b2e4d5366a2f20558129fdd589557/res/values-v17/values-v17.xml",
+                    "from": {
+                        "startLines": "2,7,11",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,280,441",
+                        "endLines": "6,10,14",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "275,436,604"
+                    }
+                },
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/872686f5c61f3b02a57bbabb37005782/res/values-v17/values-v17.xml",
                     "from": {
                         "startLines": "2,5,9,12,15,18,22,25,29,33,37,40,43,46,50,53,57",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -20,17 +31,6 @@
                         "endLines": "17,21,24,27,30,34,37,41,45,49,52,55,58,62,65,69,73",
                         "endColumns": "12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12",
                         "endOffsets": "777,1005,1163,1313,1485,1710,1880,2108,2332,2574,2745,2919,3088,3361,3561,3765,4094"
-                    }
-                },
-                {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/preference-v7-28.0.0.aar/e71cf2aecb78a5fa8457e7df5ece2d5b/res/values-v17/values-v17.xml",
-                    "from": {
-                        "startLines": "2,7,11",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,280,441",
-                        "endLines": "6,10,14",
-                        "endColumns": "12,12,12",
-                        "endOffsets": "275,436,604"
                     }
                 }
             ]

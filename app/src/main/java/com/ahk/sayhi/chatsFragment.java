@@ -4,6 +4,7 @@ package com.ahk.sayhi;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -52,6 +54,7 @@ public class chatsFragment extends Fragment {
     private String mCurrentUserId;
     private View mMainView;
 
+
     public chatsFragment() {
         // Required empty public constructor
     }
@@ -63,9 +66,8 @@ public class chatsFragment extends Fragment {
         // Inflate the layout for this fragment
         mMainView=inflater.inflate(R.layout.fragment_chats, container, false);
 
-        mChatList=(ShimmerRecyclerView)mMainView.findViewById(R.id.chatRecyclerView);
+        mChatList=mMainView.findViewById(R.id.chatRecyclerView);
         mChatList.showShimmerAdapter();
-
 
         mAuth=FirebaseAuth.getInstance();
         mCurrentUserId=mAuth.getCurrentUser().getUid();
@@ -75,28 +77,43 @@ public class chatsFragment extends Fragment {
         mUserDatabase=FirebaseDatabase.getInstance().getReference().child("Users");
         mUserDatabase.keepSynced(true);
         mMessagesDatabase=FirebaseDatabase.getInstance().getReference().child("message").child(mCurrentUserId);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+
 
         mChatList.setHasFixedSize(true);
-        mChatList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mChatList.setLayoutManager(layoutManager);
+
+        if (savedInstanceState != null) {
+            if(firebaseRecyclerAdapter != null){
+
+                mChatList.setAdapter(firebaseRecyclerAdapter);
+
+            }
+        }
 
 
         return mMainView;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
 
         FirebaseRecyclerOptions<chats> options = new FirebaseRecyclerOptions.Builder<chats>()
                 .setQuery(mQuery, chats.class)
                 .build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<chats, chatsFragment.chatsViewHolder>(options) {
+
+
             @Override
             protected void onBindViewHolder(@NonNull final chatsFragment.chatsViewHolder holder, int position, @NonNull final chats model) {
                 final String userId=getRef(position).getKey();
 
 
-                Query lastMessageQuery = mMessagesDatabase.child(userId).limitToLast(1);
+
+                Query lastMessageQuery = mMessagesDatabase.child(userId);
 
                 lastMessageQuery.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -106,6 +123,9 @@ public class chatsFragment extends Fragment {
                             boolean isSeen=dataSnapshot.child("seen").getValue(boolean.class);
 
                             holder.setMessage(data, isSeen);
+                        }
+                        else{
+                            return;
                         }
 
 
@@ -135,6 +155,8 @@ public class chatsFragment extends Fragment {
 
                 final String[] userName = new String[1];
                 mUserDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         userName[0] =dataSnapshot.child("name").getValue(String.class);
@@ -175,6 +197,7 @@ public class chatsFragment extends Fragment {
                     }
                 });
 
+
             }
             @NonNull
             @Override
@@ -188,23 +211,27 @@ public class chatsFragment extends Fragment {
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
-                mChatList.hideShimmerAdapter();
-                mChatList.setAdapter(firebaseRecyclerAdapter);
-            }
-
-
+                hideShimmerAndSetAdapter();
+                }
         };
 
-        firebaseRecyclerAdapter.startListening();
 
+        firebaseRecyclerAdapter.startListening();
     }
 
+    private void hideShimmerAndSetAdapter() {
+
+
+            mChatList.setAdapter(firebaseRecyclerAdapter);
+
+
+    }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        mChatList.showShimmerAdapter();
+
     }
 
     public static class chatsViewHolder extends RecyclerView.ViewHolder
@@ -218,17 +245,22 @@ public class chatsFragment extends Fragment {
         public void setMessage(String message, boolean isSeen){
 
             TextView userStatusView = (TextView) mView.findViewById(R.id.lastReceivedMessage);
-            userStatusView.setText(message);
-
-            Log.i("isSeenValue",String.valueOf(isSeen));
-            if(!isSeen){
+            Log.i("isSeenValue", String.valueOf(isSeen));
+            if (!isSeen) {
                 userStatusView.setTypeface(Typeface.DEFAULT_BOLD);
+            } else {
+                userStatusView.setTypeface(Typeface.DEFAULT);
+
+            }
+
+            if(message.contains("firebasestorage")){
+
+                userStatusView.setText("New image");
             }
             else {
-                 userStatusView.setTypeface(Typeface.DEFAULT);
 
+                userStatusView.setText(message);
             }
-
         }
 
         public void setName(String name) {

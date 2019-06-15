@@ -4,17 +4,7 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/2799208b82aedfb1c94cd4beda47d16c/res/values-v24/values-v24.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,212",
-                        "endColumns": "156,134",
-                        "endOffsets": "207,342"
-                    }
-                },
-                {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/a0f6ade560cf734fb05131fea49b11f0/res/values-v24/values-v24.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/a4e092bebe45905aa33c4294a7c30064/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -28,6 +18,16 @@
                         "startOffsets": "347,413,474,540",
                         "endColumns": "65,60,65,66",
                         "endOffsets": "408,469,535,602"
+                    }
+                },
+                {
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/872686f5c61f3b02a57bbabb37005782/res/values-v24/values-v24.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,212",
+                        "endColumns": "156,134",
+                        "endOffsets": "207,342"
                     }
                 }
             ]

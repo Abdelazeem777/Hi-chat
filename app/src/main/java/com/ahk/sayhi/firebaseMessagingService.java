@@ -1,5 +1,6 @@
 package com.ahk.sayhi;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -27,26 +28,49 @@ public class firebaseMessagingService extends FirebaseMessagingService {
         String clickAction=remoteMessage.getData().get("click_action");
         String fromUserId=remoteMessage.getData().get("fromUserId");
         Log.i("fromUserId",fromUserId);
+        NotificationCompat.Builder mBuilder;
 
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,"default")
-                .setSmallIcon(R.drawable.main_logo)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationMessage+" has sent you a friend request")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-
-
-        int notificationId=(int)System.currentTimeMillis();
-        Log.i("notificationId",String.valueOf(notificationId));
-        // Create an explicit intent for an Activity in your app
-        Bundle bundle=new Bundle();
-        bundle.putString("userId", fromUserId);
-        bundle.putString("userName",notificationMessage);
-        bundle.putInt("notificationId",notificationId);
         Intent intent = new Intent(clickAction);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        int notificationId=(int)System.currentTimeMillis();
+        if(notificationTitle.equals("New friend request")) {
+            //For request notification
+            mBuilder = new NotificationCompat.Builder(this, "default")
+                    .setSmallIcon(R.drawable.main_logo)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationMessage + " has sent you a friend request")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            Log.i("notificationId",String.valueOf(notificationId));
+            // Create an explicit intent for an Activity in your app
+            Bundle bundle=new Bundle();
+            bundle.putString("userId", fromUserId);
+            bundle.putString("userName",notificationMessage);
+            bundle.putInt("notificationId",notificationId);
+            intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+        else{
+            //For message notification
+            mBuilder = new NotificationCompat.Builder(this, "default")
+                    .setSmallIcon(R.drawable.main_logo)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationMessage)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+            Log.i("notificationId",String.valueOf(notificationId));
+            // Create an explicit intent for an Activity in your app
+            Bundle bundle=new Bundle();
+            bundle.putString("userId", fromUserId);
+            bundle.putString("userName",notificationTitle);
+            bundle.putInt("notificationId",notificationId);
+            intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+
+
+
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.setContentIntent(pendingIntent);
@@ -71,5 +95,29 @@ public class firebaseMessagingService extends FirebaseMessagingService {
                 NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel description");
         notificationManager.createNotificationChannel(channel);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        new Thread(){
+            @Override
+            public void run() {
+                startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+                Intent intent = new Intent(getApplicationContext(), ReceiverCall.class);
+                intent.putExtra("yourvalue", "torestore");
+
+                sendBroadcast(intent);
+
+                startService(intent);
+
+                startService(new Intent(getApplicationContext(), stayAwakeService.class));
+
+                AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                Intent intent2 = new Intent(getApplicationContext(), firebaseMessagingService.class);
+                PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0, intent2, 0);
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000), pi);
+            }
+        }.run();
     }
 }

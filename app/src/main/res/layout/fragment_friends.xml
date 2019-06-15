@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         app:shimmer_demo_layout="@layout/shimmer_layout"
         app:shimmer_demo_layout_manager_type="linear_vertical"
+        android:paddingBottom="100dp"
         android:scrollbars="vertical"
         />
 

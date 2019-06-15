@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/chatPageToolBar"
-        layout="@layout/app_bar_layout"
+        layout="@layout/app_bar_layout_for_chat"
         />
 
     <android.support.v4.widget.SwipeRefreshLayout

@@ -179,7 +179,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
             filePath = mStorageRef.child("profileImages").child(mCurrentUser.getUid() + ".jpg");
 
-             thumbFilePathRef = mStorageRef.child("profileImages").child("thumbs").child(mCurrentUser.getUid() + ".jpg");
+            thumbFilePathRef = mStorageRef.child("profileImages").child("thumbs").child(mCurrentUser.getUid() + ".jpg");
             filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {

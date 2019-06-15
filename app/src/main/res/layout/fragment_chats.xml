@@ -3,21 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
     tools:context=".chatsFragment">
 
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/chatRecyclerView"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:paddingBottom="100dp"-->
+        <!--tools:itemCount="14"-->
+        <!--tools:listitem="@layout/friends_shimmer_layout"-->
+
+        <!--/>-->
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/chatRecyclerView"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:shimmer_demo_grid_child_count="1"
         app:shimmer_demo_layout="@layout/shimmer_layout"
-        app:shimmer_demo_layout_manager_type="grid"
-        app:shimmer_demo_angle="20"
+        app:shimmer_demo_layout_manager_type="linear_vertical"
+        android:scrollbars="vertical"
+        android:paddingBottom="100dp"
+        tools:listitem="@layout/friends_shimmer_layout"
         />
+
 </FrameLayout>

@@ -36,6 +36,21 @@
         android:textColor="@android:color/black"
         android:textSize="15dp" />
 
+    <ProgressBar
+        android:id="@+id/progressForImageMessage"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorAccent"
+        android:background="@drawable/message_received_shape"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="2dp"
+        android:visibility="gone"
+        android:padding="10dp"
+        tools:targetApi="lollipop" />
+
     <ImageView
         android:id="@+id/imageAsMessage"
         android:layout_height="200dp"
@@ -51,5 +66,5 @@
         android:padding="12dp"
         android:background="@drawable/message_received_shape"
 
-        ></ImageView>
+        />
 </RelativeLayout>

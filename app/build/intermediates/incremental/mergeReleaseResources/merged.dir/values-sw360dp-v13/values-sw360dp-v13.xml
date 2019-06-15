@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="config_materialPreferenceIconSpaceReserved">true</bool>
+    <dimen name="preference_category_padding_start">56dp</dimen>
+    <dimen name="wel_text_bottom_padding">24dp</dimen>
+    <dimen name="wel_text_top_padding">24dp</dimen>
+</resources>
