@@ -71,10 +71,12 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.mainTabPager);
         mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionPagerAdapter);
-
+        int limit = (mSectionPagerAdapter.getCount() > 1 ? mSectionPagerAdapter.getCount() - 1 : 1);
+        mViewPager.setOffscreenPageLimit(limit);
         mTabLayout = (TabLayout) findViewById(R.id.mainTabs);
         mTabLayout.setupWithViewPager(mViewPager);
         startService(new Intent(getApplicationContext(), firebaseMessagingService.class));
+
 
     }
 

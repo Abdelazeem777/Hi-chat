@@ -4,7 +4,7 @@
             "outputFile": "/home/abdelazeem/AndroidStudioProjects/SayHi/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh/values-zh.xml",
             "map": [
                 {
-                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/b1fb02d451bbe972d827c9a42b4deb87/res/values-zh/values-zh.xml",
+                    "source": "/home/abdelazeem/.gradle/caches/transforms-2/files-2.1/95a346692c237c0135cf6b9825122421/res/values-zh/values-zh.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

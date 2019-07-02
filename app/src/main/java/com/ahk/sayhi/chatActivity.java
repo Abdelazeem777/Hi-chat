@@ -2,6 +2,7 @@ package com.ahk.sayhi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -56,7 +58,7 @@ public class chatActivity extends AppCompatActivity {
     private String mChatUserId;
     private String mUserName;
     private String mCurrentUserId;
-    private final List<messages> messagesList = new ArrayList<>();
+    private List<messages> messagesList = new ArrayList<>();
     private LinearLayoutManager mLinearLayout;
     private messageAdapter mAdapter;
     private static final int TOTAL_ITEM_TO_ADD = 10;
@@ -67,6 +69,9 @@ public class chatActivity extends AppCompatActivity {
     private static final int GALLERY_PICK = 1;
     private StorageReference mImageStorage;
     private String thumbImageUrl;
+    private SharedPreferences mPrefs;
+
+
 
     //Android layout
     private Toolbar mToolBar;
@@ -101,6 +106,7 @@ public class chatActivity extends AppCompatActivity {
         //Other
         mLinearLayout = new LinearLayoutManager(this);
         mAdapter = new messageAdapter(messagesList);
+        mPrefs = getPreferences(MODE_PRIVATE);
 
         mMessageList.setLayoutManager(mLinearLayout);
         mMessageList.setHasFixedSize(true);
@@ -116,28 +122,36 @@ public class chatActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View actionBarView = inflater.inflate(R.layout.custom_chat_bar, null);
         actionBar.setCustomView(actionBarView);
+
         mMessageNotification=FirebaseDatabase.getInstance().getReference().child("messageNotification");
         mChatDatabase = FirebaseDatabase.getInstance().getReference();
+        mChatDatabase.keepSynced(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
+        mRootRef.keepSynced(true);
         mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
+
+
 
         //For send images
         mImageStorage = FirebaseStorage.getInstance().getReference();
 
-        mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ds.child("seen").getRef().setValue(true);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+//        mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    ds.child("seen").getRef().setValue(true);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
 
         loadMeassages();
 
@@ -170,7 +184,7 @@ public class chatActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        Picasso.get().load(thumbImageUrl).placeholder(R.drawable.default_avatar).into(userImageView);
+                        Picasso.get().load(thumbImageUrl).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.default_avatar).into(userImageView);
                     }
                 });
                 View view = LayoutInflater.from(chatActivity.this)
@@ -353,6 +367,7 @@ public class chatActivity extends AppCompatActivity {
     private void loadMeassages() {
 
         mMessagesDatabase = FirebaseDatabase.getInstance().getReference().child("message").child(mCurrentUserId).child(mChatUserId);
+        mMessagesDatabase.keepSynced(true);
         Query mQuery = mMessagesDatabase.limitToLast(mCurrentPage * TOTAL_ITEM_TO_ADD);
         mQuery.addChildEventListener(new ChildEventListener() {
             @Override
@@ -375,20 +390,26 @@ public class chatActivity extends AppCompatActivity {
                 mLinearLayout.scrollToPosition(messagesList.size() - 1);
 
                 mRefreshLayout.setRefreshing(false);
-                mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).child(dataSnapshot.getKey()).child("seen").setValue(true).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            ds.child("seen").getRef().setValue(true);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    public void onSuccess(Void aVoid) {
+                        Log.d("seen","seen changed to true");
                     }
                 });
+//                mChatDatabase.child("message").child(mCurrentUserId).child(mChatUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                            ds.child("seen").getRef().setValue(true);
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
 
             }
 
@@ -411,6 +432,7 @@ public class chatActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
 
     }
@@ -535,4 +557,6 @@ public class chatActivity extends AppCompatActivity {
 
         }
     }
+
+
 }

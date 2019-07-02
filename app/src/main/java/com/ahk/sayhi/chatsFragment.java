@@ -1,11 +1,15 @@
 package com.ahk.sayhi;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -53,12 +58,21 @@ public class chatsFragment extends Fragment {
     //Other
     private String mCurrentUserId;
     private View mMainView;
-
+    private SharedPreferences mPref;
 
     public chatsFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +91,7 @@ public class chatsFragment extends Fragment {
         mUserDatabase=FirebaseDatabase.getInstance().getReference().child("Users");
         mUserDatabase.keepSynced(true);
         mMessagesDatabase=FirebaseDatabase.getInstance().getReference().child("message").child(mCurrentUserId);
+        mMessagesDatabase.keepSynced(true);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -84,14 +99,6 @@ public class chatsFragment extends Fragment {
 
         mChatList.setHasFixedSize(true);
         mChatList.setLayoutManager(layoutManager);
-
-        if (savedInstanceState != null) {
-            if(firebaseRecyclerAdapter != null){
-
-                mChatList.setAdapter(firebaseRecyclerAdapter);
-
-            }
-        }
 
 
         return mMainView;
@@ -217,22 +224,35 @@ public class chatsFragment extends Fragment {
 
 
         firebaseRecyclerAdapter.startListening();
+
     }
 
     private void hideShimmerAndSetAdapter() {
 
+        new Thread() {
+            public void run() {
+                
+                    try {
+                        Thread.sleep(1000);
+                        getActivity().runOnUiThread(new Runnable() {
 
-            mChatList.setAdapter(firebaseRecyclerAdapter);
+                            @Override
+                            public void run() {
+                                mChatList.setAdapter(firebaseRecyclerAdapter);
+                            }
+                        });
 
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            
+        }.start();
 
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
 
-    }
 
     public static class chatsViewHolder extends RecyclerView.ViewHolder
     {View mView;
@@ -297,5 +317,6 @@ public class chatsFragment extends Fragment {
             }
         }
     }
+
 
 }
